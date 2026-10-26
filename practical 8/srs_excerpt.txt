@@ -1,0 +1,12 @@
+SRS EXCERPT: Simple Account Portal
+
+REQ-01: A visitor can register with a unique email address and a password
+containing at least eight characters. The system confirms successful
+registration and rejects an email address that is already registered.
+
+REQ-02: A registered user can sign in with their email address and password
+and sign out. The system displays an error when the credentials are invalid.
+
+REQ-03: A registered user can request a password reset using their registered
+email address. The system confirms the request without revealing whether an
+unregistered email address exists.
