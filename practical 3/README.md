@@ -114,6 +114,77 @@ The tests check average calculations, the one-score and empty-list cases,
 valid score ranges, and each grade boundary. The expected result is 6 passing
 tests.
 
+## VS Code terminal steps for screenshots
+
+1. Open the `SW-lab-3` repository folder in VS Code.
+2. Open **Terminal → New Terminal**. The commands below use PowerShell.
+3. Change to the repository folder (adjust the path if you saved it elsewhere):
+
+```powershell
+cd "D:\MDM\Software Lab -3\SW-lab-3"
+```
+
+Run each command separately and take a screenshot showing the command and its
+output. The commands are run from the repository root.
+
+### Screenshot 1: Bug 1 traceback
+
+```powershell
+python ".\practical 3\buggy.py"
+```
+
+The program prints `Scores: [75]` followed by a `ZeroDivisionError` traceback.
+The traceback is the expected result for this intentionally buggy program.
+
+### Screenshot 2: Bug 1 fixed output
+
+```powershell
+python ".\practical 3\fixed.py"
+```
+
+Expected output:
+
+```text
+Scores: [75]
+Average: 75.00
+```
+
+### Screenshot 3: Bug 2 wrong-operator output
+
+```powershell
+python ".\practical 3\buggy2.py"
+```
+
+Expected output:
+
+```text
+Score: 90
+Grade: B
+```
+
+This is the incorrect result from the buggy program.
+
+### Screenshot 4: Bug 2 fixed output
+
+```powershell
+python ".\practical 3\fixed2.py"
+```
+
+Expected output:
+
+```text
+Score: 90
+Grade: A
+```
+
+### Screenshot 5: Fix verification tests
+
+```powershell
+python -m unittest discover -s ".\practical 3" -p "test_*.py" -v
+```
+
+The final lines should show `Ran 6 tests` and `OK`.
+
 ## Result and conclusion
 
 Both bugs were reproduced with small, repeatable examples. The AI-suggested
