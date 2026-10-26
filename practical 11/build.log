@@ -1,0 +1,17 @@
+2026-10-26T10:14:03Z ##[group]Run python -m unittest discover -s . -p "test_*.py" -v
+2026-10-26T10:14:03Z test_adds_processing_fee_once (test_payments.CalculateTotalTests.test_adds_processing_fee_once) ... FAIL
+2026-10-26T10:14:03Z
+2026-10-26T10:14:03Z ======================================================================
+2026-10-26T10:14:03Z FAIL: test_adds_processing_fee_once (test_payments.CalculateTotalTests.test_adds_processing_fee_once)
+2026-10-26T10:14:03Z ----------------------------------------------------------------------
+2026-10-26T10:14:03Z Traceback (most recent call last):
+2026-10-26T10:14:03Z   File "/home/runner/work/SW-lab-3/SW-lab-3/practical 11/test_payments.py", line 10, in test_adds_processing_fee_once
+2026-10-26T10:14:03Z     self.assertEqual(calculate_total(100.00, 8.00), 108.00)
+2026-10-26T10:14:03Z AssertionError: expected total 108.00 but got 116.00 (amount=100.00, fee=8.00)
+2026-10-26T10:14:03Z
+2026-10-26T10:14:03Z ----------------------------------------------------------------------
+2026-10-26T10:14:03Z Ran 4 tests in 0.002s
+2026-10-26T10:14:03Z
+2026-10-26T10:14:03Z FAILED (failures=1)
+2026-10-26T10:14:03Z ##[error]Process completed with exit code 1.
+2026-10-26T10:14:03Z ##[endgroup]

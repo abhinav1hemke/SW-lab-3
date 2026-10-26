@@ -1,0 +1,31 @@
+name: Practical 11 CI
+
+on:
+  push:
+    paths:
+      - "practical 11/**"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    paths:
+      - "practical 11/**"
+      - ".github/workflows/ci.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: practical 11
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run unit tests
+        run: python -m unittest discover -s . -p "test_*.py" -v
+      - name: Verify historical build log
+        run: |
+          python analyze_log.py build.log
+          python verify_cause.py
