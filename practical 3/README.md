@@ -2,72 +2,120 @@
 
 ## Aim
 
-Identify and fix errors in a buggy program with an AI coding assistant, then
-verify the suggested fix.
-
-## Problem statement
-
-The program calculates the average of student scores and assigns a letter
-grade. Valid scores and averages are between 0 and 100 inclusive. Grade
-boundaries are A (90-100), B (80-89.99), C (70-79.99), D (60-69.99), and F
-(below 60).
+Identify and fix errors in buggy programs with an AI coding assistant, then
+verify the fixes.
 
 ## Tools
 
 - Python 3
-- AI assistant using Copilot SDK in VS Code
-- Python standard library `unittest`
+- AI assistant using Copilot in VS Code
+- Python `unittest`
 
-## Debugging process and identified defects
+## Bug 1 – `buggy.py` (Step 1)
 
-`buggy_grade_report.py` is the original program containing the errors. Its
-`calculate_average` function divides by `len(scores) - 1` instead of the
-number of scores. This gives an incorrect average for lists with multiple
-scores and raises a division-by-zero error for one score. It also returns 0 for
-an empty list, which looks like a valid result instead of reporting invalid
-input.
+### Run and traceback
 
-The grade comparisons use `>` rather than `>=`, so exact boundary scores (for
-example, 90) are assigned the next lower grade.
-
-`grade_report.py` fixes these defects by dividing by the actual number of
-scores, reporting empty or out-of-range input with `ValueError`, and using
-inclusive grade thresholds. Its command-line interaction also reports invalid
-input clearly.
-
-## Run the practical
-
-From the repository root in the VS Code PowerShell terminal, run the tests:
+From the repository root in the VS Code PowerShell terminal:
 
 ```powershell
-python -m unittest discover -s ".\practical 3" -p "test_*.py" -v
+python ".\practical 3\buggy.py"
 ```
 
-Run the corrected program:
-
-```powershell
-python ".\practical 3\grade_report.py"
-```
-
-Enter scores separated by spaces when prompted, for example:
+Example traceback (file paths and Python's source-line markers can vary by
+computer and Python version):
 
 ```text
-80 90 100
+Scores: [75]
+Traceback (most recent call last):
+  File "...\practical 3\buggy.py", line 11, in <module>
+    print(f"Average: {calculate_average(sample_scores):.2f}")
+                      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "...\practical 3\buggy.py", line 5, in calculate_average
+    return sum(scores) / (len(scores) - 1)
+           ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+ZeroDivisionError: division by zero
+```
+
+### AI explanation of the root cause
+
+The average function divides the sum by `len(scores) - 1`. With the one-score
+sample, the denominator is zero, so Python raises `ZeroDivisionError`. For
+larger lists, subtracting one also makes the calculated average incorrect. An
+empty list would also make this expression invalid. The divisor should be the
+number of scores, and an empty list should be rejected explicitly.
+
+### `fixed.py` and output
+
+Run the corrected version:
+
+```powershell
+python ".\practical 3\fixed.py"
 ```
 
 Expected output:
 
 ```text
-Average: 90.00
+Scores: [75]
+Average: 75.00
+```
+
+The corrected function divides by `len(scores)` and rejects empty lists and
+scores outside the valid 0–100 range.
+
+## Bug 2 – wrong operator (Steps 8 and 9): `buggy2.py`
+
+Run the program with the boundary score 90:
+
+```powershell
+python ".\practical 3\buggy2.py"
+```
+
+Expected output from the buggy program:
+
+```text
+Score: 90
+Grade: B
+```
+
+### AI explanation of the root cause
+
+The grade conditions use strict `>` comparisons. Therefore, a score exactly
+equal to 90 does not satisfy `score > 90`; it falls through to `score > 80`
+and is incorrectly classified as B. Grade boundaries are inclusive, so the
+conditions must use `>=`.
+
+### `fixed2.py` and output
+
+Run the corrected version:
+
+```powershell
+python ".\practical 3\fixed2.py"
+```
+
+Expected output:
+
+```text
+Score: 90
 Grade: A
 ```
 
-Try a boundary score such as `90`, a single score, invalid input, and an empty
-line to verify the fix and input handling.
+The corrected function uses inclusive boundaries and rejects scores outside
+the valid 0–100 range.
+
+## Verify the fixes
+
+Run the automated tests:
+
+```powershell
+python -m unittest discover -s ".\practical 3" -p "test_*.py" -v
+```
+
+The tests check average calculations, the one-score and empty-list cases,
+valid score ranges, and each grade boundary. The expected result is 6 passing
+tests.
 
 ## Result and conclusion
 
-The tests verify the average calculation, single and empty inputs, score
-validation, inclusive grade boundaries, and average validation. Passing these
-tests confirms the corrected program behaves as specified for the tested
-cases.
+Both bugs were reproduced with small, repeatable examples. The AI-suggested
+root causes were verified by running the buggy programs, and the fixes were
+checked with expected output and automated tests.
