@@ -1,0 +1,24 @@
+LIBRARY ER DIAGRAM DESCRIPTION
+
+Create an entity-relationship diagram for a small library lending system.
+
+Entities and attributes:
+- LibraryMember: member_id (primary key), name, email (unique).
+- Book: isbn (primary key), title, author.
+- Loan: loan_id (primary key), member_id (foreign key), isbn (foreign key),
+  loan_date, due_date, return_date (optional).
+- Reservation: reservation_id (primary key), member_id (foreign key), isbn
+  (foreign key), reservation_date, status.
+
+Relationships:
+- One LibraryMember can have zero or many Loans; every Loan belongs to one
+  LibraryMember.
+- One Book can appear in zero or many Loans over time; every Loan refers to one
+  Book.
+- One LibraryMember can place zero or many Reservations; every Reservation
+  belongs to one LibraryMember.
+- One Book can have zero or many Reservations; every Reservation refers to
+  one Book.
+
+Use entity boxes with their key attributes and label the one-to-many
+relationships clearly.

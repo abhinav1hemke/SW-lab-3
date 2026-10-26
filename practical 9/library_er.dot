@@ -1,0 +1,23 @@
+digraph LibraryER {
+    graph [
+        label="Library Lending System - Entity Relationship Diagram",
+        labelloc="t",
+        rankdir="LR",
+        fontname="Arial",
+        fontsize=18,
+        nodesep=0.7,
+        ranksep=1.0
+    ];
+    node [shape=record, style="rounded,filled", fillcolor="#EAF2F8", fontname="Arial"];
+    edge [fontname="Arial", fontsize=10, color="#34495E", arrowsize=0.8];
+
+    LibraryMember [label="{LibraryMember|PK member_id|name|email (unique)}"];
+    Book [label="{Book|PK isbn|title|author}"];
+    Loan [label="{Loan|PK loan_id|FK member_id|FK isbn|loan_date|due_date|return_date (optional)}", fillcolor="#FCF3CF"];
+    Reservation [label="{Reservation|PK reservation_id|FK member_id|FK isbn|reservation_date|status}", fillcolor="#FDEDEC"];
+
+    LibraryMember -> Loan [label="1 to many"];
+    Book -> Loan [label="1 to many"];
+    LibraryMember -> Reservation [label="1 to many"];
+    Book -> Reservation [label="1 to many"];
+}
